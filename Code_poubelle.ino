@@ -177,7 +177,6 @@ int distance_plein;
 void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
-  //lcd.setRGB(colorR, colorG, colorB);
 }
 
 
@@ -225,8 +224,8 @@ void loop() {
       }
     }
 
+///////////////////////////////// cas poubelle pleine //////////////
         catch (int a) {
-          ///////////////////////////////// cas poubelle pleine //////////////
           if (color_plein_changed == false) {
             lcd.setRGB(255, 255, 0);
           }
@@ -263,7 +262,7 @@ void loop() {
 
 
 
-      while( distance > 10 ){   // tant que je suis devant la poubelle, la poubelle reste ouverte !
+      while( distance > 10 ){   // si aucune détéction devant la poubelle, elle reste fermée ! 
         Serial.println(distance);
         distance = Sensor.operator->()->getDistance();
         int distance_plein = binSensor.operator->()->getDistance();
@@ -279,13 +278,11 @@ void loop() {
           lcd.print("%"); // Ajouter le symbole pourcentage        
         }      
         if (button.isPressed()) {
-          Serial.println("nhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
           color_fermeture_changed = true ;
           currentColorIndex_fermeture = (currentColorIndex_fermeture + 1) % 6;  // Passer à l'index suivant, en revenant à 0 après 5 (le reste de la divison par 6 peut aller de 0 à 5)
           lcd.setRGB(colors[currentColorIndex_fermeture][0], colors[currentColorIndex_fermeture][1], colors[currentColorIndex_fermeture][2]);// Change la couleur à chaque appuie sur le bouton
         }
     }
-     Serial.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
       color7 = colors[currentColorIndex_fermeture][0]; // Sauvegarder la nouvelle couleur après changement
       color8 = colors[currentColorIndex_fermeture][1];
       color9 = colors[currentColorIndex_fermeture][2];
